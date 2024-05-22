@@ -12,7 +12,11 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  const commonEngine = new CommonEngine();
+  console.log("serverDistFolder => ", serverDistFolder);
+  console.log("browserDistFolder => ", browserDistFolder);
+  console.log("indexHtml => ", indexHtml);
+
+  const commonEngine = new CommonEngine({ enablePerformanceProfiler: true });
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
@@ -43,14 +47,16 @@ export function app(): express.Express {
   return server;
 }
 
-function run(): void {
-  const port = process.env['PORT'] || 4000;
+export * from './src/main.server';
 
-  // Start up the Node server
-  const server = app();
-  server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
-  });
-}
+// function run(): void {
+//   const port = process.env['PORT'] || 4000;
 
-run();
+//   // Start up the Node server
+//   const server = app();
+//   server.listen(port, () => {
+//     console.log(`Node Express server listening on http://localhost:${port}`);
+//   });
+// }
+
+// run();
